@@ -4,10 +4,9 @@ import shutil
 import sys
 import tempfile
 import uuid
-from copy import deepcopy
 from os.path import join
 from subprocess import Popen, PIPE, STDOUT
-
+from copy import deepcopy
 import yaml
 
 from util import decode, timestamp
@@ -17,7 +16,9 @@ class Worker():
 
     def __init__(self, sync, template):
         self.sync = sync
-        self.template_config = template
+        self.template_config = deepcopy(template)
+        self.sync_command = template.get("default_command", "python {pex} -c {cfg} {args}")
+        self.default_sync_args = template.get("default_args", "")
         self.logger = logging.getLogger(sync.org_id)
 
     def run(self):
@@ -47,10 +48,25 @@ class Worker():
 
     def prepare(self, sync, dir):
 
-        run_log = join(dir, str(uuid.uuid4())) + ".log"
-        full_config = self.merge_template(sync)
-        full_config['config']['data']['logging'] \
-            ['file_log_name_format'] = run_log
+        # Temporary log for logging in tmp directory
+        run_log = join(dir, str(uuid.uuid4()))
+
+        # Determines the type of sync (ldap, oneroster, etc)
+        # Required to set the keys in config correctly
+        connector_type = sync.sync_type
+
+        # Set the keys in UST config correctly for the type and files
+        full_config = self.get_template(connector_type).merge_with(sync.sync_config).values
+        full_config['config']['logging']['file_log_name_format'] = run_log
+        full_config['config']['invocation_defaults']['connector'] = connector_type
+        full_config['config']['adobe_users']['connectors'] = {
+            'umapi': 'umapi.yml'
+        }
+
+        full_config['config']['directory_users']['extension'] = 'extension.yml'
+        full_config['config']['directory_users']['connectors'] = {
+            connector_type: "connector.yml"
+        }
 
         # Copy files over
         for name, resource in full_config.items():
@@ -58,19 +74,21 @@ class Worker():
                 for f, d in resource.items():
                     shutil.copy(d['data'], join(dir, d['filename']))
             elif isinstance(resource, dict):
-                with open(join(dir, resource['filename']), 'w') as file:
-                    yaml.dump(resource['data'], file)
+                with open(join(dir, name + ".yml"), 'w') as file:
+                    yaml.dump(resource, file, default_flow_style=False)
 
         # Prepend the log with the sync info
         with open(run_log, 'w') as log:
             yaml.dump(sync.public_scope(), log)
             log.write("\n\n")
 
-        # Format the command for absolute paths (relatives will cause concurrency issues)
-        ust_config = full_config['config']['filename']
-        pex = full_config['ust_executable']
-        command = full_config.get('cmd') or full_config['default_cmd']
-        command = command.format(pex=join(dir, pex), cfg=join(dir, ust_config))
+        # Format the command for absolute paths (do NOT use os.chdir)
+        # NOTE: it must be similar like: python(3) {pex} -c {cfg} {args}
+        command = self.sync_command.format(
+            pex=join(dir, full_config['ust_executable']),
+            cfg=join(dir, 'config.yml'),
+            args=sync.sync_args or self.default_sync_args)
+
         return command, run_log
 
     def run_sync(self, command, system_shell=False):
@@ -87,10 +105,12 @@ class Worker():
                 print(line)  # For console but not log visibility
                 sys.stdout.flush()
 
-    def merge_template(self, sync):
-        data = deepcopy(sync.sync_config)
-        for d in data:
-            if d in self.template_config.values:
-                data[d] = {
-                    'data': data.get(d)}
-        return self.template_config.merge_with(data).values
+    def get_template(self, connector_type):
+
+        # Take what we need from the template list
+        keys = ['umapi', 'extension', connector_type, 'config', 'binary', 'ust_executable']
+        cfg = self.template_config.get_sub_config(keys)
+
+        # Pop the key to a new name - connector, to match sync config
+        cfg.values['connector'] = cfg.values.pop(connector_type)
+        return cfg

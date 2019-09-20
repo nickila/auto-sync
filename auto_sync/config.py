@@ -64,6 +64,14 @@ class Config():
         raw = re.split('[/\\\\]+', raw)
         return os.sep.join(raw)
 
+    # returns a new config from subset of keys
+    def get_sub_dict(self, keys):
+        return {k:self.values[k] for k  in keys}
+
+    # returns a new config from subset of keys
+    def get_sub_config(self, keys):
+        return Config(self.get_sub_dict(keys))
+
     # merges a dictionary into config
     def merge_with(self, data):
         if data:
@@ -143,7 +151,7 @@ class ConfigLoader():
         cfg = {}
         for n, f in config_files.items():
             with open(self.get_resource_path(f)) as file:
-                cfg[n] = Resource(f, yaml.safe_load(file)).as_dict()
+                cfg[n] = yaml.safe_load(file) # Resource(f, yaml.safe_load(file)).as_dict()
         return cfg
 
     def read_binaries(self, binaries):

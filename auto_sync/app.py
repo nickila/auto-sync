@@ -1,16 +1,20 @@
-import logging
+import logging.config
+import os
+
+import yaml
 
 from config import ConfigLoader
 from sync import Sync
 from util import read_file
 from worker import Worker
-import os
-
-logging.basicConfig()
 
 # Load all properties from INI and point to the folder where resources are stored
 props_file = "app.ini"
 cl = ConfigLoader.load(props_file, 'sync_resource')
+
+# Just for process output
+with open("logging.yml") as log_cfg:
+    logging.config.dictConfig(yaml.safe_load(log_cfg))
 
 sync_options = cl.get_config('sync')
 resources_config = cl.get_resource_config()
