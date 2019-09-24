@@ -6,7 +6,7 @@ from copy import deepcopy
 
 import yaml
 
-from util import compare_str, decode
+from auto_sync.util import compare_str, decode
 
 
 class Config():

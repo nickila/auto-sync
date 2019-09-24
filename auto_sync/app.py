@@ -3,10 +3,10 @@ import os
 
 import yaml
 
-from config import ConfigLoader
-from sync import Sync
-from util import read_file
-from worker import Worker
+from auto_sync.config import ConfigLoader
+from auto_sync.sync import Sync
+from auto_sync.util import read_file
+from auto_sync.worker import Worker
 
 # Load all properties from INI and point to the folder where resources are stored
 props_file = "app.ini"
