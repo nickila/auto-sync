@@ -15,10 +15,13 @@ else:
     bundle_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-
 # Load all properties from INI and point to the folder where resources are stored
 props_file = os.path.join(bundle_dir, "app.ini")
-cl = ConfigLoader.load(props_file, 'sync_resource')
+if os.path.exists('app.ini'):
+    props_file = 'app.ini'
+cl = ConfigLoader.load(props_file, '.')
+print(props_file)
+# cl = ConfigLoader.load(props_file, '')
 
 # Just for process output
 with open(os.path.join(bundle_dir, "logging.yml")) as log_cfg:

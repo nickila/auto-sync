@@ -34,7 +34,7 @@ server:
 # [NOTE: the priv_key_path setting can be an absolute or relative pathname;
 # if relative, it is interpreted relative to this configuration file.]
 enterprise:
-  org_id: "Org ID goes here"
+  org_id: "D28927675A9581A20A49412A@AdobeOrg"
   api_key: "API key goes here"
   client_secret: "Client secret goes here"
   tech_acct: "Tech account ID goes here"
