@@ -113,7 +113,7 @@ directory_users:
   # either an absolute or relative path, and if relative it's take as relative
   # to this configuration file, not to the User Sync working directory.
   # [To to use an extension, uncomment and update the next line.]
-  extension: extension-config.yml
+#  extension: extension-config.yml
 
   # (required) connectors
   # The connectors section specifies how to connect User Sync to your directory.
@@ -162,17 +162,17 @@ directory_users:
   # --process-groups command-line argument.
   groups:
 
-      - directory_group: adobe-spark
-        adobe_groups:
-          - Spark (Clever)
-
-      - directory_group: adobe-acrobat
-        adobe_groups:
-          - Acrobat (Clever)
-
-      - directory_group: ccall-apps
-        adobe_groups:
-          - All Apps Plan (Clever)
+#      - directory_group: adobe-spark
+#        adobe_groups:
+#          - Spark (Clever)
+#
+#      - directory_group: adobe-acrobat
+#        adobe_groups:
+#          - Acrobat (Clever)
+#
+#      - directory_group: ccall-apps
+#        adobe_groups:
+#          - All Apps Plan (Clever)
 
 
   # (optional) additional_groups (no default value)
