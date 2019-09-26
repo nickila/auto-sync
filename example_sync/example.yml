@@ -1,6 +1,7 @@
+# SYNC 1
 - id: "example_sync"
   sync_type: "ldap"
-  sync_args: "--process-groups --users mapped -t"
+  sync_args: "--process-groups --users mapped"
   sync_config:
     # Only need to put in what is DIFFERENT from the default files.
     # Note: dictionaries are recursed, but a non-dict values will be replaced
@@ -28,64 +29,170 @@
         tech_acct: "B7A639EA5B23D1D10A494022@techacct.adobe.com"
         priv_key_path:  "private.key"
 
-- id: example_oneroster
-  sync_type: "oneroster"
-  sync_args: "--process-groups --users mapped -t"
+# SYNC 2
+- id: "example_sync2"
+  sync_type: "ldap"
+  sync_args: "--process-groups --users mapped"
   sync_config:
-    umapi:
-      server:
-        host: usermanagement-stage.adobe.io
-        ims_host: ims-na1-stg1.adobelogin.com
-      enterprise:
-        org_id: 9F457AF55CDF6FD90A494014@AdobeOrg
-        api_key: ed49fbf9a9f74c98b7c8b13f6dfa1897
-        client_secret: 92ddde61-84ea-474f-8fff-328ff6daf872
-        tech_acct: 39F008F25D82FBAE0A499E30@techacct.adobe.com
-        priv_key_data: |
-          -----BEGIN RSA PRIVATE KEY-----
-          MIIEpAIBAAKCAQEAvs7nSqmbslW+fVlErjIFsr9/q2CsK7xFKxNbtcB7yJxOuOhw
-          9Lbvi9v+nOt3faajJb7cwuRUjyvdfHmeasXIz3zIkMT3C9LEQa6A49mF53YeNB4J
-          WsmfMsIeQ2wQnRTdBNVE3bNUvT3zPiPPzynD2PV+K1ZfYCPL8QQQZjKyGZWctp/L
-          oyQ4xDRf2uMpvu8OzzuRD8zpUlBWzEVfUFnKHCmwjCBZzEGNJyo7SLd7E9R2yzt3
-          topcqJh7m6lDmo8Ie/bTvW8LuaEWJUyHHSzQXVCKuO5gJhyfLN1IJWaWjBKq7J+D
-          Dmwk2jG31SJo9URdPxmArSs5lX0FTy4ONWfV2wIDAQABAoIBAEwj9Ffu5pp7bNBI
-          VwfMHkn98MxKf2nUbyWJTAdzD/I1rZRL7Qc6GM0OtMOZks0pOeFOEHoU80lOj8uk
-          HHsvAbsKaF6cupiVOoubPwOtQanjkJnrgoAgBM8Ud08gSGDmemv7TsfJT/9UQUSC
-          teJNIEHrdLWGefi7UB6VKJYflMJwJxUpHd4GtufN3dXvSQ23xiLRbJ24aj8lUDSa
-          dlyc0BKm7rq7GPSD3ILaC2hzWQUtHXkEJsxuo4c4AsOUm0p4Zdj98zXfhhV3Bdjb
-          gBNDWjbwnbjoVDNOxyiEXyO5Ajqm2BUocesabFDbnxt4O2Acbf4whMA/Yq/3kjXZ
-          xLcF0IECgYEA//zn67P6rdNvzveHMHfGC7GateOuSU15+VxlTL9zw0DAVhp6KcaR
-          4P1qvcQnx6W5Dqpg/4A8hoWC/qX/dl/OWiaRUJo+1nMWmmxx9AyUjWMaCnsOWVGQ
-          UuouL7MyoI8oLURapjYWFzzpb7n2vgqYO7nlw1NjSPwTUiKL1UJ8iukCgYEAvtE1
-          sQi5qm+p9pPStCiIR4jXScGlKhYR92DkRbZg7gmgAEqNy/GrbwOz6tDtWNGUr2j2
-          Wao64rAWkKiweB0xckFPx2M4ZF7EesiUyjVKDZ/4bsNqRk4i8eVhafek5+8zc0fw
-          1/R8Wmff5JTLbylm2AngTyi3s123rT93wKejGCMCgYEAtCMeeQkP8F6HoZciNQM0
-          BGqYukJcFQ1GNinExzs6lT3tmynKqbcoVLE/+gYdECsYjK9szp9I+Ejfo57gpEZL
-          Cbl2LMg+S951G3oQvnJT3yLL4nAx6ryw2QgeNEbf64iR9zjQqYIKDZQ5mPu+HIGM
-          Gwt4GfmGNofceMICsLG2vnECgYEApdU0EFNA6Hp6/6ygpanEJkcqsxLz84uSuacf
-          O+awfq8mupoQeXniP2y8ZAqG+3XI/lj+IBbtbi0Sr02rb/gPDPjt2J7GV5R0tTC0
-          /rcpUIYCZmC2b7tga1GqQ2nRizA7SqjvCv+TQw6bahBWbJlSo9aRdrowTFXaV1qd
-          PHV0LHkCgYBW/xMK6ap2C1Ck5JuTgRbKB62SuKHyqHopppaY4L72KG6ojj/hPaZR
-          BeVbZ4x/y9CJc++//gaE+ILjuOhxTS/iM/pUu9ed2jtyUkImDGvXIUJLzvy3p4jo
-          Mku/BJu2vIM9C+1KfUfY6hoXSxlnApi0vy9IsgNYN+Sv3bJskZNtrQ==
-          -----END RSA PRIVATE KEY-----
-    connector:
-      user_email_format: "{givenName}_{familyName}@caragianbadlands.com"
-      connection:
-        max_users: 10
-      mapping:
-        scoped_sources:
-          - type: yaml
-            access_token: TEST_TOKEN
-            product: adobe-spark
+    # Only need to put in what is DIFFERENT from the default files.
+    # Note: dictionaries are recursed, but a non-dict values will be replaced
+    # In theory, client can modify the ROOT files for unchanging parameters,
+    # and then only a few entries would be needed in here.
     config:
       directory_users:
         groups:
-            - directory_group: adobe-spark
-              adobe_groups:
-                - Spark (Clever)
+          - directory_group: "GROOP"
+            adobe_groups:
+              - "brian8A"
+    connector:
+      username: "adservice@seaofcarag.com"
+      password: "P3rficient"
+      base_dn: "DC=seaofcarag,DC=com"
+      host: "ldap://seaofcarag.com:389"
+    umapi:
+      server:
+        host: "usermanagement-stage.adobe.io"
+        ims_host: "ims-na1-stg1.adobelogin.com"
+      enterprise:
+        org_id: "D28927675A9581A20A49412A@AdobeOrg"
+        api_key: "30063bb75d2747faaaeaddaed6b36171"
+        client_secret: "87e70dc7-1d76-4eaf-9b73-75366cf18458"
+        tech_acct: "B7A639EA5B23D1D10A494022@techacct.adobe.com"
+        priv_key_path:  "private.key"
+
+# SYNC 3
+- id: "example_sync3"
+  sync_type: "ldap"
+  sync_args: "--process-groups --users mapped"
+  sync_config:
+    # Only need to put in what is DIFFERENT from the default files.
+    # Note: dictionaries are recursed, but a non-dict values will be replaced
+    # In theory, client can modify the ROOT files for unchanging parameters,
+    # and then only a few entries would be needed in here.
+    config:
+      directory_users:
+        groups:
+          - directory_group: "match-1"
+            adobe_groups:
+              - "fun1"
+          - directory_group: "match-2"
+            adobe_groups:
+              - "fun2"
+          - directory_group: "match-3"
+            adobe_groups:
+              - "fun3"
+    connector:
+      username: "adservice@seaofcarag.com"
+      password: "P3rficient"
+      base_dn: "DC=seaofcarag,DC=com"
+      host: "ldap://seaofcarag.com:389"
+    umapi:
+      server:
+        host: "usermanagement-stage.adobe.io"
+        ims_host: "ims-na1-stg1.adobelogin.com"
+      enterprise:
+        org_id: "D28927675A9581A20A49412A@AdobeOrg"
+        api_key: "30063bb75d2747faaaeaddaed6b36171"
+        client_secret: "87e70dc7-1d76-4eaf-9b73-75366cf18458"
+        tech_acct: "B7A639EA5B23D1D10A494022@techacct.adobe.com"
+        priv_key_path:  "private.key"
+
+# SYNC 4
+- id: "example_sync4"
+  sync_type: "ldap"
+  sync_args: "--process-groups --users all"
+  sync_config:
+    # Only need to put in what is DIFFERENT from the default files.
+    # Note: dictionaries are recursed, but a non-dict values will be replaced
+    # In theory, client can modify the ROOT files for unchanging parameters,
+    # and then only a few entries would be needed in here.
+    config:
+      directory_users:
+        extension: "extension-config.yml"
+        groups:
+          - directory_group: "GROOP"
+            adobe_groups:
+              - "brian8A"
+    connector:
+      username: "adservice@seaofcarag.com"
+      password: "P3rficient"
+      base_dn: "DC=seaofcarag,DC=com"
+      host: "ldap://seaofcarag.com:389"
+    umapi:
+      server:
+        host: "usermanagement-stage.adobe.io"
+        ims_host: "ims-na1-stg1.adobelogin.com"
+      enterprise:
+        # Test auto fill org_id from umapi file
+        # org_id: "D28927675A9581A20A49412A@AdobeOrg"
+        api_key: "30063bb75d2747faaaeaddaed6b36171"
+        client_secret: "87e70dc7-1d76-4eaf-9b73-75366cf18458"
+        tech_acct: "B7A639EA5B23D1D10A494022@techacct.adobe.com"
+        priv_key_path:  "private.key"
     extension:
       after_mapping_hook: |
         import logging
         logger = logging.getLogger('ext')
         logger.info(str(sorted(source_groups)) + " " + str(sorted(target_groups)))
+
+#- id: example_oneroster
+#  sync_type: "oneroster"
+#  sync_args: "--process-groups --users mapped -t"
+#  sync_config:
+#    umapi:
+#      server:
+#        host: usermanagement-stage.adobe.io
+#        ims_host: ims-na1-stg1.adobelogin.com
+#      enterprise:
+#        org_id: 9F457AF55CDF6FD90A494014@AdobeOrg
+#        api_key: ed49fbf9a9f74c98b7c8b13f6dfa1897
+#        client_secret: 92ddde61-84ea-474f-8fff-328ff6daf872
+#        tech_acct: 39F008F25D82FBAE0A499E30@techacct.adobe.com
+#        priv_key_data: |
+#          -----BEGIN RSA PRIVATE KEY-----
+#          MIIEpAIBAAKCAQEAvs7nSqmbslW+fVlErjIFsr9/q2CsK7xFKxNbtcB7yJxOuOhw
+#          9Lbvi9v+nOt3faajJb7cwuRUjyvdfHmeasXIz3zIkMT3C9LEQa6A49mF53YeNB4J
+#          WsmfMsIeQ2wQnRTdBNVE3bNUvT3zPiPPzynD2PV+K1ZfYCPL8QQQZjKyGZWctp/L
+#          oyQ4xDRf2uMpvu8OzzuRD8zpUlBWzEVfUFnKHCmwjCBZzEGNJyo7SLd7E9R2yzt3
+#          topcqJh7m6lDmo8Ie/bTvW8LuaEWJUyHHSzQXVCKuO5gJhyfLN1IJWaWjBKq7J+D
+#          Dmwk2jG31SJo9URdPxmArSs5lX0FTy4ONWfV2wIDAQABAoIBAEwj9Ffu5pp7bNBI
+#          VwfMHkn98MxKf2nUbyWJTAdzD/I1rZRL7Qc6GM0OtMOZks0pOeFOEHoU80lOj8uk
+#          HHsvAbsKaF6cupiVOoubPwOtQanjkJnrgoAgBM8Ud08gSGDmemv7TsfJT/9UQUSC
+#          teJNIEHrdLWGefi7UB6VKJYflMJwJxUpHd4GtufN3dXvSQ23xiLRbJ24aj8lUDSa
+#          dlyc0BKm7rq7GPSD3ILaC2hzWQUtHXkEJsxuo4c4AsOUm0p4Zdj98zXfhhV3Bdjb
+#          gBNDWjbwnbjoVDNOxyiEXyO5Ajqm2BUocesabFDbnxt4O2Acbf4whMA/Yq/3kjXZ
+#          xLcF0IECgYEA//zn67P6rdNvzveHMHfGC7GateOuSU15+VxlTL9zw0DAVhp6KcaR
+#          4P1qvcQnx6W5Dqpg/4A8hoWC/qX/dl/OWiaRUJo+1nMWmmxx9AyUjWMaCnsOWVGQ
+#          UuouL7MyoI8oLURapjYWFzzpb7n2vgqYO7nlw1NjSPwTUiKL1UJ8iukCgYEAvtE1
+#          sQi5qm+p9pPStCiIR4jXScGlKhYR92DkRbZg7gmgAEqNy/GrbwOz6tDtWNGUr2j2
+#          Wao64rAWkKiweB0xckFPx2M4ZF7EesiUyjVKDZ/4bsNqRk4i8eVhafek5+8zc0fw
+#          1/R8Wmff5JTLbylm2AngTyi3s123rT93wKejGCMCgYEAtCMeeQkP8F6HoZciNQM0
+#          BGqYukJcFQ1GNinExzs6lT3tmynKqbcoVLE/+gYdECsYjK9szp9I+Ejfo57gpEZL
+#          Cbl2LMg+S951G3oQvnJT3yLL4nAx6ryw2QgeNEbf64iR9zjQqYIKDZQ5mPu+HIGM
+#          Gwt4GfmGNofceMICsLG2vnECgYEApdU0EFNA6Hp6/6ygpanEJkcqsxLz84uSuacf
+#          O+awfq8mupoQeXniP2y8ZAqG+3XI/lj+IBbtbi0Sr02rb/gPDPjt2J7GV5R0tTC0
+#          /rcpUIYCZmC2b7tga1GqQ2nRizA7SqjvCv+TQw6bahBWbJlSo9aRdrowTFXaV1qd
+#          PHV0LHkCgYBW/xMK6ap2C1Ck5JuTgRbKB62SuKHyqHopppaY4L72KG6ojj/hPaZR
+#          BeVbZ4x/y9CJc++//gaE+ILjuOhxTS/iM/pUu9ed2jtyUkImDGvXIUJLzvy3p4jo
+#          Mku/BJu2vIM9C+1KfUfY6hoXSxlnApi0vy9IsgNYN+Sv3bJskZNtrQ==
+#          -----END RSA PRIVATE KEY-----
+#    connector:
+#      user_email_format: "{givenName}_{familyName}@caragianbadlands.com"
+#      connection:
+#        max_users: 10
+#      mapping:
+#        scoped_sources:
+#          - type: yaml
+#            access_token: TEST_TOKEN
+#            product: adobe-spark
+#    config:
+#      directory_users:
+#        groups:
+#            - directory_group: adobe-spark
+#              adobe_groups:
+#                - Spark (Clever)
+#    extension:
+#      after_mapping_hook: |
+#        import logging
+#        logger = logging.getLogger('ext')
+#        logger.info(str(sorted(source_groups)) + " " + str(sorted(target_groups)))
